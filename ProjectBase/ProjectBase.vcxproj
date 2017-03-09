@@ -168,11 +168,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="Points.h" />
     <ClInclude Include="Polygons.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Points.cpp" />
     <ClCompile Include="Polygons.cpp" />
     <ClCompile Include="Source.cpp" />

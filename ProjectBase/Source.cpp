@@ -1,13 +1,15 @@
 #include <cstdlib>
 #include <iostream>
 #include "Polygons.h"
-#include "Points.h"
+//#include "Draw.h"
 
 
 using namespace std;
 
-Polygons polyg;
+bool drawCircle = false; //flag para habilitar o desenho de círculos (apenas um exemplo)
 
+Polygons polyg;	
+//Draw desenho;
 //Callback de erro 
 static void error_callback(int error, const char* description)
 {
@@ -21,7 +23,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	if (key == GLFW_KEY_C && action == GLFW_PRESS)
 	{
-
+		drawCircle = !drawCircle;
 	}
 }
 
@@ -41,7 +43,7 @@ int main(void)
 		exit(EXIT_FAILURE);
 
 	//Criando a janela
-	window = glfwCreateWindow(1024, 768, "HELLO GLFW!! BYE BYE GLUT!!!", NULL, NULL);
+	window = glfwCreateWindow(800, 600, "HELLO GLFW!! BYE BYE GLUT!!!", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -66,7 +68,7 @@ int main(void)
 
 		//setando a viewport da OpenGL, para ocupar toda a janela da aplicação
 		glViewport(0, 0, width, height);
-
+		
 		// Limpa a janela de visualização com a cor branca
 		glClearColor(1, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -75,16 +77,34 @@ int main(void)
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		//Setando a janela do mundo a ser vista (window), a câmera ortográfica 2D
-		gluOrtho2D(-3, 3, -3, 3);
+		gluOrtho2D(-3, 3,-3, 3);
 
 		//Trocando para a matriz de modelo
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		
-		//inserir comandos para desenhos aqui!
+		if (drawCircle) {
+			float r = rand() % 10 / 10.0;
+			float b = rand() % 10 / 10.0;
+			float g = rand() % 10 / 10.0;
+			float radius = rand() % 10 / 10.0;
 
-		polyg.DrawCircleP('p',0.0f, 0.0f, 0.0f,0.3f);
+			polyg.DrawCircleP(1,1,'p', r, g, b, radius);
+			system("PAUSE");
+		}
+		else {
+			//inserir comandos para desenhos aqui!
+			//polyg.DrawCaracolP();
+			//polyg.DrawCircleP(1, 1, 'p', 0, 0, 0, 1);
+			polyg.DrawEllipsesP(); //*****Arrumar este método
+			//polyg.DrawHeptagonP(); //*****Arrumar este método
+			//polyg.DrawHegaxonP();
+			//polyg.DrawPacMan();
+			//polyg.DrawPizzaP();
+			//polyg.DrawRetangleP();
+			//polyg.DrawTriangleP(); 
+			
+		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

@@ -2,116 +2,7 @@
 #include <iostream>
 #include <string>
 
-
-void Polygons::DrawCircle(float posX, float posY, float radius, float nPoints)
-{
-	float rd = radius;
-
-	float angle = 0.0;
-	float slice = 2 * Pi / nPoints;
-	float x, y;
-
-	float xi = posX;
-	float yi = posY;
-
-	//Habilitar a cor do círculo
-	glColor3f(0, 0, 0);
-
-	//Tamanho do ponto
-	glPointSize(1);
-
-	//Espessura da linha
-	glLineWidth(1);
-
-	//Habilitar o desenho do tipo de primitiva escolhido (ponto, linha, polígono etc)
-	glBegin(GL_TRIANGLE_FAN);
-	while (angle <= 2 * Pi)
-	{
-		/*Sorteia uma cor para o vertice
-		float r = rand() % 10 / 10.0;
-		float b = rand() % 10 / 10.0;
-		float g = rand() % 10 / 10.0;*/
-
-		glColor3f(0, 0, 0);
-
-		//Calcular posicao do ponto em x, y
-		x = xi + rd * cos(angle);
-		y = yi + rd * sin(angle);
-		glVertex2f(x, y);
-		//Atualizar o angulo
-		angle += slice;
-	}
-	//Desabilita o desenho do tipo de primitiva
-	glEnd();
-
-	/*/Para desenhar o contorno
-	//Habilitar o desenho do tipo de primitiva escolhido (ponto, linha, polígono etc)
-	glColor3f(0, 0, 0);
-	angle = 0.0;
-	glBegin(GL_TRIANGLE_FAN);
-	while (angle <= 2 * Pi)
-	{
-	//Calcular posicao do ponto em x, y
-	x = xi + rd * cos(angle);
-	y = yi + rd * sin(angle);
-	glVertex2f(x, y);
-	//Atualizar o angulo
-	angle += slice;
-	}
-	//Desabilita o desenho do tipo de primitiva
-	glEnd();
-
-	//Para desenhar os pontos
-	//Habilitar o desenho do tipo de primitiva escolhido (ponto, linha, polígono etc)
-	glColor3f(1, 1, 1);
-	angle = 0.0;
-	glBegin(GL_POINTS);
-	while (angle <= 2 * Pi)
-	{
-	//Calcular posicao do ponto em x, y
-	x = xi + rd * cos(angle);
-	y = yi + rd * sin(angle);
-	glVertex2f(x, y);
-	//Atualizar o angulo
-	angle += slice;
-	}
-	//Desabilita o desenho do tipo de primitiva
-	glEnd();*/
-
-}
-
-void Polygons::DrawTriangle()
-{
-	glPointSize(15);
-	glLineWidth(3);
-
-	// Desenha um triângulo no centro da janela
-	glBegin(GL_TRIANGLES);
-	glColor3f(1, 0, 0);
-	glVertex2f(-0.5, -0.5);
-	glColor3f(0, 1, 0);
-	glVertex3f(0.0, 0.5, 0);
-	glColor3f(0, 0, 1);
-	glVertex3f(0.5, -0.5, 0);
-	glEnd();
-
-	glColor3f(0, 0, 0);
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(-0.5, -0.5);
-	glVertex3f(0.0, 0.5, 0);
-	glVertex3f(0.5, -0.5, 0);
-	glEnd();
-
-	glColor3f(0, 1, 1);
-	glBegin(GL_POINTS);
-	glVertex2f(-0.5, -0.5);
-	glVertex3f(0.0, 0.5, 0);
-	glVertex3f(0.5, -0.5, 0);
-	glEnd();
-}
-
-
-void Polygons::DrawCircleP(char form, float r, float g, float b, float radius){
+void Polygons::DrawCircleP(float posX, float posY, char form, float r, float g, float b, float radius){
 	glPointSize(15);
 	glLineWidth(1);
 	glColor3f(r, g, b);
@@ -125,56 +16,10 @@ void Polygons::DrawCircleP(char form, float r, float g, float b, float radius){
 	}
 	for (int i = 0; i < circle_points; i++) {
 		angle = 2 * Pi*i / circle_points;
-		glVertex2d(cos(angle)*raioX, sin(angle)*raioY);
+		glVertex2d(posX + (cos(angle)*raioX), +(posY + (sin(angle)*raioY)));
+		//glVertex2d(cos(angle)*raioX,+(sin(angle)*raioY));
 	}
 	glEnd();
-
-}
-
-void Polygons::DrawRetangleP() {
-
-	glPointSize(15);
-	glLineWidth(3);
-	glColor3f(0, 0, 0);
-
-	glBegin(GL_POLYGON); //desenho de um retangulo
-	glVertex2d(0, 0);
-	glVertex2d(0.25, 0);
-	glVertex2d(0.25, 0.5);
-	glVertex2d(0, 0.5);
-	glEnd();
-}
-
-void Polygons::DrawTriangleP() {
-
-	glPointSize(15);
-	glLineWidth(3);
-	glColor3f(0, 0, 0);
-
-	glBegin(GL_TRIANGLES); //desenho de um triângulo
-	glVertex2f(-0.5, -0.5);
-	glVertex3f(0.0, 0.5, 0);
-	glVertex3f(0.5, -0.5, 0);
-	glEnd();
-
-}
-
-void Polygons::DrawPizzaP() {
-
-	glPointSize(15);
-	glLineWidth(1);
-	glColor3f(0, 0, 0);
-
-	GLfloat circle_points = 100.0f;
-	GLfloat angle, raioX = 1.0f, raioY = 1.0f;
-
-	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 0; i < circle_points; i++) {
-		angle = (Pi / 4)*i / circle_points;
-		glVertex2d(cos(angle)*raioX, sin(angle)*raioY);
-	}
-	glEnd();
-
 
 }
 
@@ -196,20 +41,51 @@ void Polygons::DrawCaracolP() {
 }
 
 void Polygons::DrawEllipsesP() {
-	for (float x = 0.0; x <= 1 * Pi; x += 0.03)
-	{
-		glBegin(GL_LINES);
-		glVertex2f(sin(x), 1 / 2 * cos(x));
-		glVertex2f(sin(x + 0.03), 1 / 2 * cos(x + 0.03));
+	glPointSize(15);
+	glLineWidth(1);
+	glColor3f(0, 0, 0);
+
+	for (float x = 0.0; x <= 1 * Pi; x += 0.03){
+		glBegin(GL_POLYGON);
+			glVertex2f(sin(x), 1 / 2 * cos(x));
+			glVertex2f(sin(x + 0.03), 1 / 2 * cos(x + 0.03));
 		glEnd();
 	}
 }
 
+void Polygons::DrawHeptagonP() {
 
+	glPointSize(15);
+	glLineWidth(1);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 6; ++i) {
+		glVertex2d(sin(i / 6.0 * 2 * Pi), cos(i / 6.0 * 2 * Pi));
+	}
+	glEnd();
+
+}
+void Polygons::DrawHegaxonP(){
+	glPointSize(15);
+	glLineWidth(1);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_LINE_LOOP);
+	float y = 0.5*sqrt(3);
+		
+		glVertex2d(-0.5, y*(-1));
+		glVertex2d(-1, 0);
+		glVertex2d(-0.5, y);
+		glVertex2d(0.5, y);
+		glVertex2d(1, 0);
+		glVertex2d(0.5, y*(-1));
+	glEnd();
+		
+}
 void Polygons::DrawPacMan() {
-	//DrawCircleP('p');
-	//DrawCircle(0, 0.5, 0.08, 300);
-
+	DrawCircleP(0, 0, 'p', 1, 1, 0, 1);
+	DrawCircleP(0, 0.5, 'p',0,0,0,0.08);
 
 	glColor3f(1, 1, 1);
 	int i;
@@ -231,8 +107,130 @@ void Polygons::DrawPacMan() {
 }
 
 
-void Polygons::teste() {
+
+void Polygons::DrawRetangleP() {
+
+	glPointSize(15);
+	glLineWidth(3);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_POLYGON); //desenho de um retangulo
+	glVertex2d(0, 0);
+	glVertex2d(0.25, 0);
+	glVertex2d(0.25, 0.5);
+	glVertex2d(0, 0.5);
+	glEnd();
+}
+
+void Polygons::DrawTriangleP(float v1[2], float v2[2], float v3[2]) {
+
+	glPointSize(15);
+	glLineWidth(1);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_POLYGON); //desenho de um triângulo
+	glVertex2f(0.5f, 0.5f);
+	glVertex2f(0.0, 1.5f);
+	glVertex2f(-0.5f, 0.5f);
+
+	glEnd();
 
 }
+
+void Polygons::DrawPizzaP() {
+
+	glColor3f(0, 0, 0);
+	int i;
+	int triangleAmount = 20; //# of triangles used to draw circle
+	GLfloat radius = 1;
+	GLfloat x = 0;
+	GLfloat y = 0;
+	//GLfloat radius = 0.8f; //radius
+	GLfloat twicePi = Pi / 4;
+
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x, y); // center of circle
+	for (i = 0; i <= triangleAmount; i++) {
+		glVertex2f(
+			x + (radius * cos(i *  twicePi / triangleAmount)), y + (radius * sin(i * twicePi / triangleAmount)));
+	}
+	glEnd();
+
+}
+
+
+
+
+
+
+void Polygons::teste() {
+
+	glPointSize(15);
+	glLineWidth(3);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_POLYGON); //casa
+		glVertex2d(0, 0);
+		glVertex2d(0.25, 0);
+		glVertex2d(0.25, 0.5);
+		glVertex2d(0, 0.5);
+	glEnd();
+
+	glPointSize(15);
+	glLineWidth(3);
+	glColor3f(0.5, 0.5, 0.5);
+
+	glBegin(GL_POLYGON);//telhado
+		glVertex2d(0, 0.5f);
+		glVertex2d(0.125, 1);
+		glVertex2d(0.25, 0.5);
+	glEnd();
+
+	glPointSize(15);
+	glLineWidth(3);
+	glColor3f(0, 0, 0);
+
+	glBegin(GL_LINE_LOOP);//contorno telhado
+		glVertex2d(0, 0.5f);
+		glVertex2d(0.125, 1);
+		glVertex2d(0.25, 0.5);
+	glEnd();
+
+	glPointSize(15);
+	glLineWidth(3);
+	glColor3f(0, 0.8, 0);
+
+	glBegin(GL_QUADS);//gramado
+		glVertex2d(0.25, 0);
+		glVertex2d(0.25, 0.05);
+		glVertex2d(3, 0.05);
+		glVertex2d(3, 0);
+	glEnd();
+
+
+
+	DrawCircleP(1,1,'p', 1, 1, 0, 0.2);
+
+	/*
+	glPointSize(15);
+	glLineWidth(1);
+	glColor3f(1, 1, 1);
+
+	GLfloat circle_points = 100.0f;
+	GLfloat angle, raioX = 1, raioY = 1;
+	glBegin(GL_POLYGON);
+	
+for (int i = 0; i < circle_points; i++) {
+		angle = 2 * Pi*i / circle_points;
+		glVertex2d(2 + (cos(angle)*raioX), (2 + (sin(angle)*raioY)));
+	}
+	glEnd();
+	*/
+
+		
+
+}
+
+
 
 

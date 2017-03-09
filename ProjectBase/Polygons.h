@@ -6,19 +6,19 @@
 #include <string>
 const float Pi = 3.14159;
 
-
 class Polygons
 {
 public:
 	Polygons() {}
 	~Polygons() {}
 
-	void DrawCircle(float posX, float posY, float radius, float nPoints);
+	//void DrawCircle(float posX, float posY, float radius, float nPoints);
 	void DrawTriangle();
-	void DrawCircleP(char form, float r, float g, float b, float radius);
+	void DrawCircleP(float posX, float posY, char form, float r, float g, float b, float radius);
 	void DrawRetangleP();
-	void DrawHexagonP();
-	void DrawTriangleP();
+	void DrawHeptagonP();
+	void DrawHegaxonP();
+	void DrawTriangleP(float v1[2],float v2[2],float v3[2]);
 	void DrawPizzaP();
 	void DrawEllipsesP();
 	void DrawCaracolP();
